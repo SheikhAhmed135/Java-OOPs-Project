@@ -10,7 +10,7 @@ public class Login {
         String username = sc.nextLine();
         System.out.print("Password: ");
         String password = sc.nextLine();
-
+        System.out.println("hello");
         System.out.println("Welcome '" + username + "'");
     }
 }
