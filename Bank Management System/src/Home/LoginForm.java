@@ -22,10 +22,13 @@ public class LoginForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String email = "user@gmail.com";
-                String pass = "123";
+                String pass = "1234";
                 String ps = new String(passwordField1.getPassword());
                 if ((emailText.getText().equals(email)) && (ps.equals(pass))) {
                     JOptionPane.showMessageDialog(null, "Login Successful");
+                    MainMenu mainMenu = new MainMenu();
+//                    System.exit(0);
+                    mainMenu.mainMenu(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid email or password!");
                 }
@@ -43,14 +46,14 @@ public class LoginForm {
         });
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("LOGIN");
-        frame.setContentPane(new LoginForm().MainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 375);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false); // maximize button disable
-        frame.setVisible(true);
+    public void loginPage(boolean visible) {
+        JFrame login = new JFrame("LOGIN");
+        login.setContentPane(new LoginForm().MainPanel);
+        login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        login.setSize(400, 375);
+        login.pack();
+        login.setLocationRelativeTo(null);
+        login.setResizable(false); // maximize button disable
+        login.setVisible(visible);
     }
 }
