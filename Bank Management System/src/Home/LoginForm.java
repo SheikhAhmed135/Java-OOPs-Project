@@ -27,6 +27,7 @@ public class LoginForm {
                 if ((emailText.getText().equals(email)) && (ps.equals(pass))) {
                     JOptionPane.showMessageDialog(null, "Login Successful");
                     MainMenu mainMenu = new MainMenu();
+//                    mainMenu.getData();
 //                    System.exit(0);
                     mainMenu.mainMenu(true);
                 } else {

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class AccountDetails {
     private JTextField doc;
     private JButton editDetails;
     private JButton saveButton;
+    private JButton backButton;
 
     public AccountDetails() {
         editDetails.addActionListener(new ActionListener() {
@@ -55,7 +57,7 @@ public class AccountDetails {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    FileWriter file = new FileWriter("./src/Data/accountDetails.txt");
+                    FileWriter file = new FileWriter("./src/Data/accountDetails.json");
                     Gson gson = new Gson();
                     Map<String, String> data = new HashMap<>();
                     data.put("Id", id.getText());
@@ -65,9 +67,8 @@ public class AccountDetails {
                     data.put("nationality", nationality.getText());
                     data.put("dob", dob.getText());
                     data.put("doc", doc.getText());
-
+                    data.put("amount", "0");
                     String json = gson.toJson(data);
-                    System.out.println(json);
                     file.write(json);
                     file.close();
 
@@ -94,23 +95,32 @@ public class AccountDetails {
                 }
             }
         });
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainMenu mainMenu = new MainMenu();
+//                mainMenu.getData();
+                mainMenu.mainMenu(true);
+
+            }
+        });
+    }
+
+    public void fetch() {
+        Filer filer = new Filer();
+        String fileData = filer.read("accountDetails");
+        JsonObject accountData = new Gson().fromJson(fileData, JsonObject.class);
+        String Id = accountData.get("Id").toString();
+        System.out.println(Id);
+        id.setText(Id);
+        username.setText(accountData.get("username").toString());
+        address.setText(accountData.get("address").toString());
+        String accountGender = accountData.get("gender").toString();
+        nationality.setText(accountData.get("nationality").toString());
+        dob.setText(accountData.get("dob").toString());
     }
 
     public void accountDetail(boolean visible) throws IOException {
-        try {
-            FileReader file = new FileReader("./src/Data/accountDetails.txt");
-            int data;
-            StringBuilder fileData = new StringBuilder();
-            while ((data=file.read()) !=-1) {
-                fileData.append((char) data);
-            }
-            Gson gson = new Gson();
-            String stringData = fileData.toString();
-            JsonObject convertedObject = new Gson().fromJson(stringData, JsonObject.class);
-            System.out.println(convertedObject.get("gender"));
-        } catch (java.io.FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
         JFrame account = new JFrame("Account Details");
         account.setContentPane(new AccountDetails().mainPanel);
         account.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,8 +1,12 @@
 package Home;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class MainMenu {
@@ -12,6 +16,9 @@ public class MainMenu {
     private JButton withdrawCashBtn;
     private JButton depositCashBtn;
     private JButton logoutButton;
+    private JTextField amount;
+    private JTextField id;
+    private JTextField username;
 
     public MainMenu() {
         logoutButton.addActionListener(new ActionListener() {
@@ -26,6 +33,7 @@ public class MainMenu {
                 AccountDetails accountDetails = new AccountDetails();
                 try {
                     accountDetails.accountDetail(true);
+                    accountDetails.fetch();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -48,6 +56,25 @@ public class MainMenu {
     }
 
     public void mainMenu(boolean visible) {
+        try {
+            FileReader file = new FileReader("./src/Data/accountDetails.txt");
+            int data;
+            StringBuilder fileData = new StringBuilder();
+            while ((data=file.read()) !=-1) {
+                fileData.append((char) data);
+            }
+            if (!fileData.isEmpty()) {
+//                Gson gson = new Gson();
+                String stringData = fileData.toString();
+                JsonObject accountDetails = new Gson().fromJson(stringData, JsonObject.class);
+                id.setText(accountDetails.get("Id").toString());
+                username.setText(accountDetails.get("username").toString());
+            }
+            file.close();
+
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
         JFrame mainMenu = new JFrame("Main Menu");
         mainMenu.setContentPane(new MainMenu().mainPanel);
         mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
