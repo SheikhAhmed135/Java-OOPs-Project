@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,7 +25,7 @@ public class Credit {
                 JsonObject userData = new Gson().fromJson(userDataString, JsonObject.class);
                 double amount;
                 amount = Double.parseDouble(userData.get("amount").toString().replaceAll("^\"|\"$", ""))
-                        - Double.parseDouble(amountText.getText().toString().replaceAll("^\"|\"$", ""));
+                        - Double.parseDouble(amountText.getText().replaceAll("^\"|\"$", ""));
                 try {
                     FileWriter write = new FileWriter("./src/Data/accountDetails.txt");
                     Gson gson = new Gson();
@@ -49,7 +47,7 @@ public class Credit {
 
                 try {
                     FileWriter logs = new FileWriter("./src/Data/transactionLogs.txt", true);
-                    logs.append("Amount ").append(amountText.getText().toString()).append(" withdrawed from your account ").append(String.valueOf(userData.get("Id"))).append("\n");
+                    logs.append("Amount '").append(amountText.getText()).append("' withdrawed from your account ").append(String.valueOf(userData.get("Id"))).append("\n");
                     logs.close();
                     JOptionPane.showMessageDialog(null, "Amount withdrawed from your account");
                     MainMenu mainMenu = new MainMenu();
@@ -59,16 +57,13 @@ public class Credit {
                 }
             }
         });
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainMenu mainMenu = new MainMenu();
-                mainMenu.mainMenu(true);
-            }
+        backButton.addActionListener(e -> {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.mainMenu(true);
         });
     }
 
-    void credit(boolean visible) {
+    void credit() {
         JFrame frame = new JFrame();
         frame.setContentPane(new Credit().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +71,6 @@ public class Credit {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.pack();
-        frame.setVisible(visible);
+        frame.setVisible(true);
     }
 }

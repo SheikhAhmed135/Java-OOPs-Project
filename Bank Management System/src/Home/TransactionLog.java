@@ -1,8 +1,6 @@
 package Home;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TransactionLog {
     private JPanel mainPanel;
@@ -16,12 +14,9 @@ public class TransactionLog {
         Filer filer = new Filer();
         String data = filer.read("transactionLogs");
         logs.setText(data);
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainMenu mainMenu = new MainMenu();
-                mainMenu.mainMenu(true);
-            }
+        backButton.addActionListener(e -> {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.mainMenu(true);
         });
     }
 

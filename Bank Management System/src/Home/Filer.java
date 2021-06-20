@@ -1,9 +1,6 @@
 package Home;
 
-import com.google.gson.Gson;
-
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class Filer {
@@ -22,13 +19,4 @@ public class Filer {
         }
     }
 
-    void write(String name) {
-        try {
-            FileWriter file = new FileWriter("./src/Data/" + name + ".txt");
-            Gson gson = new Gson();
-            file.close();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
