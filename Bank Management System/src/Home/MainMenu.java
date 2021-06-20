@@ -21,6 +21,20 @@ public class MainMenu {
     private JTextField username;
 
     public MainMenu() {
+        id.setEnabled(true);
+        id.setEditable(false);
+        username.setEnabled(true);
+        username.setEditable(false);
+        amount.setEnabled(true);
+        amount.setEditable(false);
+
+        Filer filer = new Filer();
+        String fileData = filer.read("accountDetails");
+        JsonObject accountData = new Gson().fromJson(fileData, JsonObject.class);
+        id.setText(accountData.get("Id").toString().replaceAll("^\"|\"$", ""));
+        username.setText(accountData.get("username").toString().replaceAll("^\"|\"$", ""));
+        amount.setText(accountData.get("amount").toString().replaceAll("^\"|\"$", ""));
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,7 +47,6 @@ public class MainMenu {
                 AccountDetails accountDetails = new AccountDetails();
                 try {
                     accountDetails.accountDetail(true);
-                    accountDetails.fetch();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -51,6 +64,13 @@ public class MainMenu {
             public void actionPerformed(ActionEvent e) {
                 Credit credit = new Credit();
                 credit.credit(true);
+            }
+        });
+        transHistoryBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TransactionLog transactionLog = new TransactionLog();
+                transactionLog.transactionView(true);
             }
         });
     }

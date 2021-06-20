@@ -4,15 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,18 +27,48 @@ public class AccountDetails {
     private JButton backButton;
 
     public AccountDetails() {
-        editDetails.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                id.setEnabled(true);
-                username.setEnabled(true);
-                address.setEnabled(true);
-                gender.setEnabled(true);
-                nationality.setEnabled(true);
-                dob.setEnabled(true);
-                doc.setEditable(true);
-                saveButton.setEnabled(true);
-            }
+        id.setEnabled(true);
+        id.setEditable(false);
+        username.setEnabled(true);
+        username.setEditable(false);
+        address.setEnabled(true);
+        address.setEditable(false);
+        gender.setEnabled(true);
+        gender.setEditable(false);
+        nationality.setEnabled(true);
+        nationality.setEditable(false);
+        dob.setEnabled(true);
+        dob.setEditable(false);
+        doc.setEnabled(true);
+        doc.setEditable(false);
+
+        Filer filer = new Filer();
+        String fileData = filer.read("accountDetails");
+        JsonObject accountData = new Gson().fromJson(fileData, JsonObject.class);
+        id.setText(accountData.get("Id").toString().replaceAll("^\"|\"$", ""));
+        username.setText(accountData.get("username").toString().replaceAll("^\"|\"$", ""));
+        address.setText(accountData.get("address").toString().replaceAll("^\"|\"$", ""));
+        gender.setSelectedIndex(Integer.parseInt(accountData.get("gender").toString().replaceAll("^\"|\"$", "")));
+        nationality.setText(accountData.get("nationality").toString().replaceAll("^\"|\"$", ""));
+        dob.setText(accountData.get("dob").toString().replaceAll("^\"|\"$", ""));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDateTime now = LocalDateTime.now();
+        doc.setText(dtf.format(now));
+        gender.setEnabled(false);
+
+        editDetails.addActionListener(e -> {
+            id.setEnabled(true);
+            id.setEditable(true);
+            username.setEnabled(true);
+            username.setEditable(true);
+            address.setEnabled(true);
+            address.setEditable(true);
+            gender.setEnabled(true);
+            nationality.setEnabled(true);
+            nationality.setEditable(true);
+            dob.setEnabled(true);
+            dob.setEditable(true);
+            saveButton.setEnabled(true);
         });
 
         id.addKeyListener(new KeyAdapter() {
@@ -53,37 +80,34 @@ public class AccountDetails {
                 }
             }
         });
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    FileWriter file = new FileWriter("./src/Data/accountDetails.json");
-                    Gson gson = new Gson();
-                    Map<String, String> data = new HashMap<>();
-                    data.put("Id", id.getText());
-                    data.put("username", username.getText());
-                    data.put("address", address.getText());
-                    data.put("gender", gender.getSelectedItem().toString());
-                    data.put("nationality", nationality.getText());
-                    data.put("dob", dob.getText());
-                    data.put("doc", doc.getText());
-                    data.put("amount", "0");
-                    String json = gson.toJson(data);
-                    file.write(json);
-                    file.close();
+        saveButton.addActionListener(e -> {
+            try {
+                FileWriter file = new FileWriter("./src/Data/accountDetails.txt");
+                Gson gson = new Gson();
+                Map<String, String> data = new HashMap<>();
+                data.put("Id", id.getText());
+                data.put("username", username.getText());
+                data.put("address", address.getText());
+                data.put("gender", "" + gender.getSelectedIndex());
+                data.put("nationality", nationality.getText());
+                data.put("dob", dob.getText());
+                data.put("doc", doc.getText());
+                data.put("amount", "0");
+                String json = gson.toJson(data);
+                file.write(json);
+                file.close();
 
-                    id.setEnabled(false);
-                    username.setEnabled(false);
-                    address.setEnabled(false);
-                    gender.setEnabled(false);
-                    nationality.setEnabled(false);
-                    dob.setEnabled(false);
-                    doc.setEditable(false);
-                    saveButton.setEnabled(false);
-
-                } catch (java.io.IOException ep) {
-                    ep.printStackTrace();
-                }
+                id.setEnabled(false);
+                username.setEnabled(false);
+                address.setEnabled(false);
+                gender.setEnabled(false);
+                nationality.setEnabled(false);
+                dob.setEnabled(false);
+                doc.setEditable(false);
+                saveButton.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "Data is saved successfully");
+            } catch (IOException ep) {
+                ep.printStackTrace();
             }
         });
         username.addKeyListener(new KeyAdapter() {
@@ -95,29 +119,10 @@ public class AccountDetails {
                 }
             }
         });
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainMenu mainMenu = new MainMenu();
-//                mainMenu.getData();
-                mainMenu.mainMenu(true);
-
-            }
+        backButton.addActionListener(e -> {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.mainMenu(true);
         });
-    }
-
-    public void fetch() {
-        Filer filer = new Filer();
-        String fileData = filer.read("accountDetails");
-        JsonObject accountData = new Gson().fromJson(fileData, JsonObject.class);
-        String Id = accountData.get("Id").toString();
-        System.out.println(Id);
-        id.setText(Id);
-        username.setText(accountData.get("username").toString());
-        address.setText(accountData.get("address").toString());
-        String accountGender = accountData.get("gender").toString();
-        nationality.setText(accountData.get("nationality").toString());
-        dob.setText(accountData.get("dob").toString());
     }
 
     public void accountDetail(boolean visible) throws IOException {
