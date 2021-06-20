@@ -1,8 +1,6 @@
 package Home;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginForm {
     private JPanel MainPanel;
@@ -18,31 +16,25 @@ public class LoginForm {
 
 
     public LoginForm() {
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String email = "user@gmail.com";
-                String pass = "1234";
-                String ps = new String(passwordField1.getPassword());
-                if ((emailText.getText().equals(email)) && (ps.equals(pass))) {
-                    JOptionPane.showMessageDialog(null, "Login Successful");
-                    MainMenu mainMenu = new MainMenu();
+        loginButton.addActionListener(e -> {
+            String email = "user@gmail.com";
+            String pass = "1234";
+            String ps = new String(passwordField1.getPassword());
+            if ((emailText.getText().equals(email)) && (ps.equals(pass))) {
+                JOptionPane.showMessageDialog(null, "Login Successful");
+                MainMenu mainMenu = new MainMenu();
 //                    mainMenu.getData();
 //                    System.exit(0);
-                    mainMenu.mainMenu(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid email or password!");
-                }
+                mainMenu.mainMenu(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid email or password!");
             }
         });
-        showPasswordCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (showPasswordCheckBox.isSelected()) {
-                    passwordField1.setEchoChar((char) 0);
-                } else {
-                    passwordField1.setEchoChar('*');
-                }
+        showPasswordCheckBox.addActionListener(e -> {
+            if (showPasswordCheckBox.isSelected()) {
+                passwordField1.setEchoChar((char) 0);
+            } else {
+                passwordField1.setEchoChar('*');
             }
         });
     }

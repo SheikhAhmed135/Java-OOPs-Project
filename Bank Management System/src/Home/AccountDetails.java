@@ -41,6 +41,7 @@ public class AccountDetails {
         dob.setEditable(false);
         doc.setEnabled(true);
         doc.setEditable(false);
+        saveButton.setVisible(false);
 
         Filer filer = new Filer();
         String fileData = filer.read("accountDetails");
@@ -69,6 +70,7 @@ public class AccountDetails {
             dob.setEnabled(true);
             dob.setEditable(true);
             saveButton.setEnabled(true);
+            saveButton.setVisible(true);
         });
 
         id.addKeyListener(new KeyAdapter() {
@@ -105,6 +107,7 @@ public class AccountDetails {
                 dob.setEnabled(false);
                 doc.setEditable(false);
                 saveButton.setEnabled(false);
+                saveButton.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Data is saved successfully");
             } catch (IOException ep) {
                 ep.printStackTrace();

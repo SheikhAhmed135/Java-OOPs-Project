@@ -24,7 +24,7 @@ public class Deposit {
                 String userDataString = file.read("accountDetails");
                 JsonObject userData = new Gson().fromJson(userDataString, JsonObject.class);
                 double amount;
-                amount = Double.parseDouble(amountText.getText().toString().replaceAll("^\"|\"$", ""))
+                amount = Double.parseDouble(amountText.getText().replaceAll("^\"|\"$", ""))
                         + Double.parseDouble(userData.get("amount").toString().replaceAll("^\"|\"$", ""));
                 try {
                     FileWriter write = new FileWriter("./src/Data/accountDetails.txt");
@@ -46,7 +46,7 @@ public class Deposit {
                 }
                 try {
                     FileWriter logs = new FileWriter("./src/Data/transactionLogs.txt", true);
-                    logs.append("Amount ").append(amountText.getText().toString()).append(" added to your account ").append(String.valueOf(userData.get("Id"))).append("\n");
+                    logs.append("Amount '").append(amountText.getText()).append("' added to your account ").append(String.valueOf(userData.get("Id"))).append("\n");
                     logs.close();
                     JOptionPane.showMessageDialog(null, "Amount depositted to your account");
                     MainMenu mainMenu = new MainMenu();
@@ -65,16 +65,13 @@ public class Deposit {
                 }
             }
         });
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainMenu mainMenu = new MainMenu();
-                mainMenu.mainMenu(true);
-            }
+        backButton.addActionListener(e -> {
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.mainMenu(true);
         });
     }
 
-    void deposit(boolean visible) {
+    void deposit() {
         JFrame frame = new JFrame("Deposit");
         frame.setContentPane(new Deposit().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,6 +79,6 @@ public class Deposit {
         frame.pack();
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(visible);
+        frame.setVisible(true);
     }
 }

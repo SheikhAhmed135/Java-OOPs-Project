@@ -35,43 +35,26 @@ public class MainMenu {
         username.setText(accountData.get("username").toString().replaceAll("^\"|\"$", ""));
         amount.setText(accountData.get("amount").toString().replaceAll("^\"|\"$", ""));
 
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+        logoutButton.addActionListener(e -> System.exit(0));
+        accDetailsBtn.addActionListener(e -> {
+            AccountDetails accountDetails = new AccountDetails();
+            try {
+                accountDetails.accountDetail(true);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         });
-        accDetailsBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AccountDetails accountDetails = new AccountDetails();
-                try {
-                    accountDetails.accountDetail(true);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
+        depositCashBtn.addActionListener(e -> {
+            Deposit deposit = new Deposit();
+            deposit.deposit();
         });
-        depositCashBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Deposit deposit = new Deposit();
-                deposit.deposit(true);
-            }
+        withdrawCashBtn.addActionListener(e -> {
+            Credit credit = new Credit();
+            credit.credit();
         });
-        withdrawCashBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Credit credit = new Credit();
-                credit.credit(true);
-            }
-        });
-        transHistoryBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TransactionLog transactionLog = new TransactionLog();
-                transactionLog.transactionView(true);
-            }
+        transHistoryBtn.addActionListener(e -> {
+            TransactionLog transactionLog = new TransactionLog();
+            transactionLog.transactionView(true);
         });
     }
 
