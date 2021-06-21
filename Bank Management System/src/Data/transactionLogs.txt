@@ -1,11 +1,2 @@
-Amount 5222 withdrawed from your account "10002"
-Amount 50000 added to your account "10002"
-Amount 10000 added to your account "10002"
-Amount 500 added to your account "10002"
-Amount 187 withdrawed from your account "10002"
-Amount 20000 added to your account "10002"
-Amount 800 withdrawed from your account "10002"
-Amount 20000 added to your account "10002"
-Amount 2000 withdrawed from your account "10002"
-Amount 1000 added to your account "10002"
-Amount 791 withdrawed from your account "10002"
+Amount '5000' added to your account "10002" [2021/06/21 08:52:41]
+Amount '500' withdrawed from your account "10002" [2021/06/21 08:53:14] 

@@ -6,6 +6,8 @@ import com.google.gson.JsonObject;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +48,15 @@ public class Deposit {
                 }
                 try {
                     FileWriter logs = new FileWriter("./src/Data/transactionLogs.txt", true);
-                    logs.append("Amount '").append(amountText.getText()).append("' added to your account ").append(String.valueOf(userData.get("Id"))).append("\n");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    String dateTime = dtf.format(now);
+                    logs.append("Amount '")
+                            .append(amountText.getText())
+                            .append("' added to your account ")
+                            .append(String.valueOf(userData.get("Id")))
+                            .append(" [").append(dateTime).append("] ")
+                            .append("\n");
                     logs.close();
                     JOptionPane.showMessageDialog(null, "Amount depositted to your account");
                     MainMenu mainMenu = new MainMenu();

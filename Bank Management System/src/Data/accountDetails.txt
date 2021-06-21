@@ -1,1 +1,1 @@
-{"amount":"1000.0","address":"somewhere in the world","gender":"1","nationality":"Pakistani","dob":"09/07/2002","doc":"2021/06/20","Id":"10002","username":"Arbeena"}
+{"amount":"4500.0","address":"somewhere in world","gender":"1","nationality":"Pakistani","dob":"09/07/2002","doc":"2021/06/21","Id":"10002","username":"Arbeena"}

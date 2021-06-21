@@ -6,6 +6,8 @@ import com.google.gson.JsonObject;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +49,15 @@ public class Credit {
 
                 try {
                     FileWriter logs = new FileWriter("./src/Data/transactionLogs.txt", true);
-                    logs.append("Amount '").append(amountText.getText()).append("' withdrawed from your account ").append(String.valueOf(userData.get("Id"))).append("\n");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    String dateTime = dtf.format(now);
+                    logs.append("Amount '")
+                            .append(amountText.getText())
+                            .append("' withdrawed from your account ")
+                            .append(String.valueOf(userData.get("Id")))
+                            .append(" [").append(dateTime).append("] ")
+                            .append("\n");
                     logs.close();
                     JOptionPane.showMessageDialog(null, "Amount withdrawed from your account");
                     MainMenu mainMenu = new MainMenu();

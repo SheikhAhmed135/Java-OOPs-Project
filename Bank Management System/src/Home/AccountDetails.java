@@ -99,16 +99,36 @@ public class AccountDetails {
                 file.write(json);
                 file.close();
 
-                id.setEnabled(false);
-                username.setEnabled(false);
-                address.setEnabled(false);
-                gender.setEnabled(false);
-                nationality.setEnabled(false);
-                dob.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "Data is saved successfully");
+                id.setEnabled(true);
+                id.setEditable(false);
+                username.setEnabled(true);
+                username.setEditable(false);
+                address.setEnabled(true);
+                address.setEditable(false);
+                gender.setEnabled(true);
+                gender.setEditable(false);
+                nationality.setEnabled(true);
+                nationality.setEditable(false);
+                dob.setEnabled(true);
+                dob.setEditable(false);
+                doc.setEnabled(true);
                 doc.setEditable(false);
+
+                Filer newFiler = new Filer();
+                String newFileData = newFiler.read("accountDetails");
+                JsonObject newAccountData = new Gson().fromJson(newFileData, JsonObject.class);
+                id.setText(newAccountData.get("Id").toString().replaceAll("^\"|\"$", ""));
+                username.setText(newAccountData.get("username").toString().replaceAll("^\"|\"$", ""));
+                address.setText(newAccountData.get("address").toString().replaceAll("^\"|\"$", ""));
+                gender.setSelectedIndex(Integer.parseInt(newAccountData.get("gender").toString().replaceAll("^\"|\"$", "")));
+                nationality.setText(newAccountData.get("nationality").toString().replaceAll("^\"|\"$", ""));
+                dob.setText(newAccountData.get("dob").toString().replaceAll("^\"|\"$", ""));
+
+                gender.setEnabled(false);
                 saveButton.setEnabled(false);
                 saveButton.setVisible(false);
-                JOptionPane.showMessageDialog(null, "Data is saved successfully");
+
             } catch (IOException ep) {
                 ep.printStackTrace();
             }

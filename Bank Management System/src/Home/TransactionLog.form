@@ -41,6 +41,7 @@
               <background color="-12303292"/>
               <editable value="true"/>
               <enabled value="false"/>
+              <foreground color="-1"/>
               <margin top="10" left="10" bottom="10" right="10"/>
               <text value=""/>
             </properties>
@@ -83,7 +84,7 @@
       </hspacer>
       <component id="a19ac" class="javax.swing.JLabel">
         <constraints>
-          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-12303292"/>
